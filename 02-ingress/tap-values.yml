@@ -1,0 +1,68 @@
+
+# command to install 
+#
+# tanzu package install tap -p tap.tanzu.vmware.com -v 1.0.1 --values-file tap-values.yml -n tap-install 
+
+# command to update
+#
+# tanzu package installed update tap -p tap.tanzu.vmware.com -v 1.0.1 --values-file tap-values.yml -n tap-install
+
+# commmand to list installed packages 
+#
+# tanzu package installed list
+#
+
+# indicates that all packages that are part of tap.tanzu.vmware.com should be installed 
+profile: full
+
+# indicates that the customer acknwoldges that the CEIP data collection 
+# program has been explained to them. 
+ceip_policy_disclosed: true # Installation fails if this is set to 'false'
+
+# Configure contour to use a Loadbalancer
+
+contour:
+  envoy:
+    service:
+      type: LoadBalancer
+
+# contour:
+#   infrastructure_provider: aws
+#   envoy:
+#     service:
+#       #annotations:
+#         #service.beta.kubernetes.io/aws-load-balancer-eip-allocations: eipalloc-089aa21c2a71ca74d
+#       aws:
+#         LBType: nlb
+
+
+# A list of package to skipp installing 
+excluded_packages:
+  - accelerator.apps.tanzu.vmware.com
+  - api-portal.tanzu.vmware.com
+  - run.appliveview.tanzu.vmware.com
+  - build.appliveview.tanzu.vmware.com
+  - buildservice.tanzu.vmware.com
+  - cartographer.tanzu.vmware.com
+  - cnrs.tanzu.vmware.com
+  - controller.conventions.apps.tanzu.vmware.com
+  - developer-conventions.tanzu.vmware.com
+  - fluxcd.source.controller.tanzu.vmware.com
+  - grype.scanning.apps.tanzu.vmware.com
+  - image-policy-webhook.signing.apps.tanzu.vmware.com
+  - image-policy-webhook.signing.run.tanzu.vmware.com
+  - learningcenter.tanzu.vmware.com
+  - workshops.learningcenter.tanzu.vmware.com
+  - metadata-store.apps.tanzu.vmware.com
+  - ootb-delivery-basic.tanzu.vmware.com
+  - ootb-supply-chain-basic.tanzu.vmware.com
+  - ootb-supply-chain-testing-scanning.tanzu.vmware.com
+  - ootb-templates.tanzu.vmware.com
+  - scanning.apps.tanzu.vmware.com
+  - service-bindings.labs.vmware.com
+  - services-toolkit.tanzu.vmware.com
+  - controller.source.apps.tanzu.vmware.com
+  - spring-boot-conventions.tanzu.vmware.com
+  - tap-gui.tanzu.vmware.com
+  - tap-telemetry.tanzu.vmware.com
+  - tekton.tanzu.vmware.com
