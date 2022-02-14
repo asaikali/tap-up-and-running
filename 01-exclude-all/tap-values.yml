@@ -5,7 +5,7 @@
 
 # command to update
 #
-# tanzu package installed update tap -p tap.tanzu.vmware.com -v 1.0.0 --values-file tap-values.yml -n tap-install
+# tanzu package installed update tap -p tap.tanzu.vmware.com -v 1.0.1 --values-file tap-values.yml -n tap-install
 
 # commmand to list installed packages 
 #

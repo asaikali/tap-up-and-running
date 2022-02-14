@@ -19,21 +19,11 @@ profile: full
 # program has been explained to them. 
 ceip_policy_disclosed: true # Installation fails if this is set to 'false'
 
-# Configure contour to use a Loadbalankap
+# Configure contour to use a LoadBalancer
 contour:
   envoy:
     service:
       type: LoadBalancer
-
-# contour:
-#   infrastructure_provider: aws
-#   envoy:
-#     service:
-#       #annotations:
-#         #service.beta.kubernetes.io/aws-load-balancer-eip-allocations: eipalloc-089aa21c2a71ca74d
-#       aws:
-#         LBType: nlb
-
 
 # A list of package to skipp installing 
 excluded_packages:
