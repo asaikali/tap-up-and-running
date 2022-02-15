@@ -8,4 +8,9 @@
    are using. You can configure a CNAME alias in your DNS that point to the CNAME returned 
    from the command `kubectl get service/envoy -n tanzu-system-ingress`
 
-   
+# GKE Specific install notes 
+
+1. The GKE control plane seems to perform aggresive rate limiting against
+   the api-server. Make sure to use a regional GKE cluster not a zonal
+   GKE cluster.
+
