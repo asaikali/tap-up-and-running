@@ -1,17 +1,3 @@
-
-# command to install 
-#
-# tanzu package install tap -p tap.tanzu.vmware.com -v 1.0.1 --values-file tap-values.yml -n tap-install 
-
-# command to update
-#
-# tanzu package installed update tap -p tap.tanzu.vmware.com -v 1.0.1 --values-file tap-values.yml -n tap-install
-
-# commmand to list installed packages 
-#
-# tanzu package installed list -n tap-install
-#
-
 # indicates that all packages that are part of tap.tanzu.vmware.com should be installed 
 profile: full
 
@@ -19,7 +5,23 @@ profile: full
 # program has been explained to them. 
 ceip_policy_disclosed: true # Installation fails if this is set to 'false'
 
-# Configure contour to use a Loadbalankap
+# Configure contour / envoy with an external loadbalancer whos
+# ip you can add to DNS so that you can access the TAP domains 
+# You will need a wild card subdoman for example *.tap.example.com
+#
+# TAP has a gui that the rest of this file will configure to deplay
+# on tap-gui.tap.example.com 
+#
+# TAP has learning center that run on demand workshops. We will 
+# configure Tanzu Learning center to deploy to 
+# *.tlc.tap.example.com
+#
+# The Cloud Native Runtime is going to need a domain name to
+# deploy knative services onto. We will configure this domain
+# to be *.cnr.tap.example.com
+#
+# To be able to configure all these domain you need to configure
+# contour deployment to use an externa LoadBalancer
 contour:
   envoy:
     service:
@@ -27,35 +29,63 @@ contour:
 
 # Setup the Cloud Native Runtime Settings 
 cnrs:
-  domain_name: cnr.aws.tanzu.ca
+  domain_name: cnr.tap.example.com
   domain_template: "{{.Name}}-{{.Namespace}}.{{.Domain}}"
 
-# A list of package to skipp installing 
-excluded_packages:
-  - accelerator.apps.tanzu.vmware.com
-  - api-portal.tanzu.vmware.com
-  - run.appliveview.tanzu.vmware.com
-  - build.appliveview.tanzu.vmware.com
-  - buildservice.tanzu.vmware.com
-  - cartographer.tanzu.vmware.com
-  - controller.conventions.apps.tanzu.vmware.com
-  - developer-conventions.tanzu.vmware.com
-  - fluxcd.source.controller.tanzu.vmware.com
-  - grype.scanning.apps.tanzu.vmware.com
-  - image-policy-webhook.signing.apps.tanzu.vmware.com
-  - image-policy-webhook.signing.run.tanzu.vmware.com
-  - learningcenter.tanzu.vmware.com
-  - workshops.learningcenter.tanzu.vmware.com
-  - metadata-store.apps.tanzu.vmware.com
-  - ootb-delivery-basic.tanzu.vmware.com
-  - ootb-supply-chain-basic.tanzu.vmware.com
-  - ootb-supply-chain-testing-scanning.tanzu.vmware.com
-  - ootb-templates.tanzu.vmware.com
-  - scanning.apps.tanzu.vmware.com
-  - service-bindings.labs.vmware.com
-  - services-toolkit.tanzu.vmware.com
-  - controller.source.apps.tanzu.vmware.com
-  - spring-boot-conventions.tanzu.vmware.com
-  - tap-gui.tanzu.vmware.com
-  - tap-telemetry.tanzu.vmware.com
-  - tekton.tanzu.vmware.com
+# learning center
+learningcenter:
+  ingressDomain: "tlc.tap.example.com"
+
+# tap gui
+tap_gui:
+  service_type: ClusterIP
+  ingressEnabled: "true"
+  ingressDomain: "tap.example.com"
+  app_config:
+    auth:
+      environment: development
+      providers:
+        github:
+          development:
+            clientId: ""  # you need to get this value from GitHub Developer Settings OAuth2 page
+            clientSecret: ""
+    app:
+      baseUrl: http://tap-gui.tap.example.com
+    catalog:
+      locations:
+        - type: url
+          target: https://github.com/asaikali/tap-gui-sample-catalog
+    backend:
+      baseUrl: http://tap-gui.tap.example.com
+      cors:
+        origin: http://tap-gui.tap.example.com
+
+# setup the build service 
+buildservice:
+  kp_default_repository: "registry.example.com/build-service"  # Build service images will be stored here, not application images containerzed by TBS
+  kp_default_repository_username: "" 
+  kp_default_repository_password: ""
+  tanzunet_username: "" # creds for tanzu net so that installer can pull images from tanzu net and put them in the defalut repo 
+  tanzunet_password: ""
+  descriptor_name: "tap-1.0.0-full"
+  enable_automatic_dependency_updates: true
+
+
+# setup supply chain 
+supply_chain: basic
+# supply_chain: testing
+#supply_chain: testing_scanning
+
+# ootb_supply_chain_testing:
+
+#ootb_supply_chain_testing_scanning:
+ootb_supply_chain_basic:
+  registry:
+    server: "registry.example.com" # TBS will write container images to this OCI registry 
+    repository: "apps"  # contairezed app images will go into this repo 
+  gitops:
+    ssh_secret: ""
+
+  grype:
+  #namespace: "MY-DEV-NAMESPACE" # (optional) Defaults to default namespace.
+  targetImagePullSecret: "registry-credentials"
