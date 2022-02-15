@@ -1,3 +1,10 @@
+# All K8s Distributions
+
+1. TAP includes a collection of daemon sets, envoy and appliveview. If your
+   worker nodes do not have enough free vCPU then scheduling of some 
+   daemonsets will fail. Make sure to use worker nodes with at least 
+   4 vCPU to give enough room for a demo environment. 
+
 # EKS Specific install notes  
 
 1. AWS ECR registry only issues short lived credentials. This is difficult to setup with Tanzu Build Service. 
