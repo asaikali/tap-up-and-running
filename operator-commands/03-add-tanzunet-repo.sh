@@ -1,8 +1,8 @@
 #
-# Define a repoistory that can be used to pull images 
-# from tanzu net and install them into the cluster
-# the pulling, and beployment of the packages is 
-# handled by kapp-controller and carvel tools 
+# Defines a repository that can be used to pull images from Tanzu net and install them into the cluster.
+#
+# Image pulling, and deployment of the packages is handled by kapp-controller and carvel tools 
+#
 
 export INSTALL_REGISTRY_HOSTNAME=registry.tanzu.vmware.com
 export INSTALL_REGISTRY_USERNAME=$TANZU_NET_USERNAME

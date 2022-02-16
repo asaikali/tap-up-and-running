@@ -1,3 +1,7 @@
+#
+# Inspect Tanzu packages
+#
+
 # tanzu cli to get all installed packages 
 tanzu package installed get tap -n tap-install
 
