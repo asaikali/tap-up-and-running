@@ -3,6 +3,7 @@
 # this RBAC is required so that the supply chain 
 # can do what it needs to go from source to running workload
 # 
+# Addition to create-additional-developer-naME: kubectl create clusterrolebinding apps-admin --clusterrole=cluster-admin --serviceaccount=dev-space:default
 # 
 
 cat <<EOF | kubectl -n default apply -f -

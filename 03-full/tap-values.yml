@@ -28,6 +28,13 @@ contour:
       type: LoadBalancer
 
 # Setup the Cloud Native Runtime Settings 
+# Deploy and app called foo into namespace bar 
+# 
+# foo-bar.cnr.tap.example.com 
+# 
+# demoapp in namespace test 
+# 
+# demoapp-test.cnr.tap.example.com
 cnrs:
   domain_name: cnr.tap.example.com
   domain_template: "{{.Name}}-{{.Namespace}}.{{.Domain}}"
@@ -54,7 +61,7 @@ tap_gui:
     catalog:
       locations:
         - type: url
-          target: https://github.com/asaikali/tap-gui-sample-catalog
+          target: https://github.com/asaikali/tap-gui-sample-catalog/blob/main/catalog-info.yaml
     backend:
       baseUrl: http://tap-gui.tap.example.com
       cors:

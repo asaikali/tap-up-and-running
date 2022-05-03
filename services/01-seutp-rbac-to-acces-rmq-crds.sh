@@ -1,0 +1,1 @@
+kubectl apply -f resource-claims-rmq.yaml

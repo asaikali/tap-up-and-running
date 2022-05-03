@@ -1,0 +1,8 @@
+# example-rabbitmq-cluster-service-instance.yaml
+---
+apiVersion: rabbitmq.com/v1beta1
+kind: RabbitmqCluster
+metadata:
+  name: example-rabbitmq-cluster-1
+spec:
+  replicas: 1

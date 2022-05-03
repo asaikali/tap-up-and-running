@@ -1,0 +1,10 @@
+# rabbitmq-clusterresource.yaml
+apiVersion: services.apps.tanzu.vmware.com/v1alpha1
+kind: ClusterResource
+metadata:
+  name: rabbitmq
+spec:
+  shortDescription: It's a RabbitMQ cluster!
+  resourceRef:
+    group: rabbitmq.com
+    kind: RabbitmqCluster
